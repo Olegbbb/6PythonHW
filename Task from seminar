@@ -1,0 +1,61 @@
+string = '-2+2*3/2+14/2*4' 
+b = string
+def Parsing(string):    
+    new_str =''
+    for i in range(len(string)):
+        if not string[i].isdigit():
+            new_str += ' '+ string[i]+ ' '
+        else: new_str += string[i]
+    return new_str
+
+def Multi_Division(new_list):
+    for i in range(len(new_list)):
+        if new_list[i] == '*':
+            if new_list[i - 1] == '':
+                new_list[i] = str(int(new_list[i - 2]) * int(new_list [i + 1]))
+                new_list[i - 2] = ''
+                new_list[i + 1] = '' 
+                print(new_list)
+            else:
+                new_list[i] = str(int(new_list[i - 1]) * int(new_list [i + 1]))
+                new_list[i - 1] = ''
+                new_list[i + 1] = '' 
+                print(new_list)       
+        if new_list[i] == '/':
+            if new_list[i - 1] == '':
+                new_list[i] = str(int(new_list[i - 2]) / int(new_list [i + 1])).replace('.0','')
+                new_list[i - 2] = ''
+                new_list[i + 1] = ''
+                print(new_list)
+            else:
+                new_list[i] = str(int(new_list[i - 1]) / int(new_list [i + 1])).replace('.0','')
+                new_list[i - 1] = ''
+                new_list[i + 1] = ''
+                print(new_list)
+
+def Addition_Subtraction(new_list):
+    a = 0
+    for i in range(len(new_list)):
+        if new_list[i] == "+"  and i - 1 == 0:
+            a = int(new_list[i - 1]) + int(new_list[i + 1])
+        elif new_list[i] == "-"  and i - 1 == 0:
+            a = int(new_list[i - 1]) - int(new_list[i + 1])
+        elif new_list[i] == "+" :
+            a = int(new_list[i + 1]) + a
+        elif new_list[i] == "-":
+            a = a - int(new_list[i + 1]) 
+    return a
+
+
+new_list = Parsing(string).split()
+
+ 
+Multi_Division(new_list)
+string = ''.join(new_list)
+new_list = Parsing(string).split()
+
+
+Addition_Subtraction(new_list)
+
+
+print(f'Результат выражения {b} = {Addition_Subtraction(new_list)}')
